@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { useGameContext } from "../context/GameContext";
-import WordLine from "./Wordline";
+import WordLine from "./WordLine";
 
-export default function WordGrid(props: any) {
+export default function WordGrid() {
   const { numberOfRows } = useGameContext();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -13,7 +13,7 @@ export default function WordGrid(props: any) {
         console.log(`Key "${e.key}" released  [event: keyup]`);
       });
     }
-  }, [ref.current]);
+  }, [ref]);
 
   return (
     <div ref={ref}>

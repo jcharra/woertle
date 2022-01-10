@@ -4,7 +4,7 @@ interface WordLineProps {
   rowIndex: number;
 }
 
-const WordLine = (props: WordLineProps) => {
+export default function WordLine(props: WordLineProps) {
   const { rowIndex } = props;
   const { guessedWords, cursorRow, wordLength } = useGameContext();
   const content = guessedWords[rowIndex];
@@ -17,6 +17,4 @@ const WordLine = (props: WordLineProps) => {
       ))}
     </>
   );
-};
-
-export default WordLine;
+}

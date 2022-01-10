@@ -37,7 +37,7 @@ export function GameContextProvider({
   const [cursorRow, setCursorRow] = useState(0);
   const [cursorColumn, setCursorColumn] = useState(0);
   const [targetWord, setTargetWord] = useState("");
-  const [guessedWords, setGuessedWords] = useState([]);
+  const [guessedWords, setGuessedWords] = useState<string[]>([]);
 
   function processChar(c: string) {
     console.log("Received", c);

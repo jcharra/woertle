@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { useGameContext } from "../context/GameContext";
-import CharacterBox from "./CharacterBox";
+import { useEffect } from "react";
 import { getFeedback } from "./utils";
 
 interface WordLineProps {

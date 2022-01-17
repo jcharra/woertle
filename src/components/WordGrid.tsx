@@ -1,12 +1,9 @@
 import * as React from "react";
-import { useGameContext } from "../context/GameContext";
 import WordLine from "./WordLine";
 
 export const MAX_ATTEMPTS = 6;
 
 export default function WordGrid() {
-  const { newGame } = useGameContext();
-
   return (
     <>
       <div>

@@ -1,77 +1,83 @@
 import * as React from "react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
+import { MAX_ATTEMPTS } from "../components/WordGrid";
 
 export interface Game {
-  wordLength: number;
-  numberOfRows: number;
   cursorRow: number;
-  cursorColumn: number;
   targetWord: string;
-  guessedWords: string[];
+  guesses: string[];
   processChar: (c: string) => void;
   newGame: (wordlength: number, attemps: number) => void;
 }
 
 export const GameContext = createContext<Game>({
-  wordLength: 0,
-  numberOfRows: 0,
   cursorRow: 0,
-  cursorColumn: 0,
   targetWord: "",
-  guessedWords: [],
+  guesses: [],
   processChar: (c: string) => {},
   newGame: (wordlength: number, attemps: number) => {},
 });
 
 function isAllowedChar(c: string) {
-  return /[a-zA-Z]/.test(c);
+  return /^[a-zA-Z]$/.test(c);
 }
 
-export function GameContextProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [wordLength, setWordLength] = useState(0);
-  const [numberOfRows, setNumberOfRows] = useState(0);
+export const WORD_LENGTH = 5;
+
+export function GameContextProvider({ children }: { children: React.ReactNode }) {
   const [cursorRow, setCursorRow] = useState(0);
-  const [cursorColumn, setCursorColumn] = useState(0);
-  const [targetWord, setTargetWord] = useState("");
-  const [guessedWords, setGuessedWords] = useState<string[]>([]);
+  const [targetWord, setTargetWord] = useState("NANNY");
+  const [guesses, setGuesses] = useState<string[]>([]);
 
-  function processChar(c: string) {
-    console.log("Received", c);
-    if (!isAllowedChar(c)) {
-      console.log("rejected");
-      return;
-    }
+  const processChar = useCallback(
+    (c: string) => {
+      if (cursorRow === MAX_ATTEMPTS) {
+        console.log("No more attempts");
+        return;
+      }
 
-    const wordsUpdated = [...guessedWords];
-    const currentWord = wordsUpdated[cursorRow] || "";
-    if (currentWord.length < wordLength) {
-      wordsUpdated[cursorRow] = wordsUpdated[cursorRow] + c;
-      setGuessedWords(wordsUpdated);
-    }
-  }
+      const word = guesses[cursorRow] || "";
 
-  function newGame(_wordLength: number, _attempts: number) {
-    setWordLength(_wordLength);
-    setNumberOfRows(_attempts);
-    setGuessedWords([]);
+      if (c === "Enter" && word.length === 5) {
+        setCursorRow((cr) => cr + 1);
+        return;
+      }
+
+      if (c === "DEL" && word.length > 0) {
+        const guessesUpdated = [...guesses];
+        guessesUpdated[cursorRow] = word.slice(0, word.length - 1);
+        setGuesses(guessesUpdated);
+        return;
+      }
+
+      if (!isAllowedChar(c)) {
+        console.log("rejected", c);
+        return;
+      }
+
+      if (word.length < 5) {
+        const guessesUpdated = [...guesses];
+        guessesUpdated[cursorRow] = word + c;
+        setGuesses(guessesUpdated);
+      } else {
+        console.log("Current is", word, "longer than", 5);
+      }
+    },
+    [cursorRow, guesses]
+  );
+
+  const newGame = useCallback((_wordLength: number, _attempts: number) => {
+    setGuesses([]);
     setTargetWord("abcde");
     setCursorRow(0);
-    setCursorColumn(0);
-  }
+  }, []);
 
   return (
     <GameContext.Provider
       value={{
-        wordLength,
-        numberOfRows,
         cursorRow,
-        cursorColumn,
         targetWord,
-        guessedWords,
+        guesses,
         processChar,
         newGame,
       }}

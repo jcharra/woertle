@@ -1,20 +1,40 @@
+import { useEffect, useState } from "react";
 import { useGameContext } from "../context/GameContext";
+import CharacterBox from "./CharacterBox";
+import { getFeedback } from "./utils";
 
 interface WordLineProps {
   rowIndex: number;
 }
 
+export enum Feedback {
+  CORRECT = "CORRECT",
+  WRONG_POS = "WRONG_POS",
+  WRONG = "WRONG",
+  NONE = "NONE",
+}
+
 export default function WordLine(props: WordLineProps) {
   const { rowIndex } = props;
-  const { guessedWords, cursorRow, wordLength } = useGameContext();
-  const content = guessedWords[rowIndex];
-  const isCommited = cursorRow > rowIndex;
+  const { guesses, cursorRow, targetWord } = useGameContext();
+  const [feedback, setFeedback] = useState<Feedback[]>([]);
+  const word = guesses[rowIndex] || "";
+
+  useEffect(() => {
+    if (cursorRow > rowIndex) {
+      setFeedback(getFeedback(word, targetWord));
+    }
+  }, [cursorRow > rowIndex]);
 
   return (
-    <>
-      {Array.from(Array(wordLength)).map((idx) => (
-        <div className="border border-solid p-2">{content.charAt(idx)}</div>
+    <div className="grid grid-cols-5 place-content-center">
+      {Array.from(Array(5).keys()).map((idx) => (
+        <CharacterBox
+          key={`${rowIndex}_${idx}`}
+          char={word.charAt(idx) || "."}
+          feedback={feedback[idx] || Feedback.NONE}
+        />
       ))}
-    </>
+    </div>
   );
 }

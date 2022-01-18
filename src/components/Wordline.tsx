@@ -1,4 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useGameContext, WORD_LENGTH } from "../context/GameContext";
+import CharacterBox from "./CharacterBox";
 import { getFeedback } from "./utils";
 
 interface WordLineProps {
@@ -21,8 +23,10 @@ export default function WordLine(props: WordLineProps) {
   useEffect(() => {
     if (cursorRow > rowIndex) {
       setFeedback(getFeedback(word, targetWord));
+    } else {
+      setFeedback(Array(WORD_LENGTH).fill(Feedback.NONE));
     }
-  }, [cursorRow > rowIndex]);
+  }, [cursorRow, rowIndex, targetWord, word]);
 
   return (
     <div className="grid grid-cols-5 place-content-center">

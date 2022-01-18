@@ -12,6 +12,8 @@ export default function CharacterBox({ char, feedback }: { char: string; feedbac
         ref.current.style.background = "gray";
       } else if (feedback === Feedback.WRONG_POS) {
         ref.current.style.background = "yellow";
+      } else {
+        ref.current.style.background = "transparent";
       }
     }
   }, [feedback]);

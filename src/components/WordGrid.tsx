@@ -1,28 +1,24 @@
 import * as React from "react";
-import { useRef } from "react";
-import { useGameContext } from "../context/GameContext";
+import { MAX_ATTEMPTS, useGameContext } from "../context/GameContext";
 import WordLine from "./WordLine";
-
-export const MAX_ATTEMPTS = 6;
 
 export default function WordGrid() {
   const { processChar } = useGameContext();
-  const ref = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    if (ref.current) {
-      const elem = ref.current;
-      const listener = (e: KeyboardEvent) => processChar(e.key);
-      elem.addEventListener("keyup", listener);
-      elem.focus();
+    console.log("Add listener");
+    const listener = (e: KeyboardEvent) => processChar(e.key);
+    window.addEventListener("keyup", listener);
 
-      return () => elem.removeEventListener("keyup", listener);
-    }
-  }, [ref, processChar]);
+    return () => {
+      console.log("Remove listener");
+      window.removeEventListener("keyup", listener);
+    };
+  }, [processChar]);
 
   return (
     <>
-      <div ref={ref} tabIndex={1} className="focus:outline-none">
+      <div id="grid" tabIndex={0} className="focus:outline-0">
         {Array.from(Array(MAX_ATTEMPTS).keys()).map((idx) => (
           <WordLine rowIndex={idx} key={"line" + idx}></WordLine>
         ))}

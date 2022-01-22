@@ -20,6 +20,8 @@ export default function WordLine(props: WordLineProps) {
   const [feedback, setFeedback] = useState<Feedback[]>([]);
   const word = guesses[rowIndex] || "";
 
+  console.log("Guesses", guesses, "my word:", word, "at line", rowIndex);
+
   useEffect(() => {
     if (cursorRow > rowIndex) {
       setFeedback(getFeedback(word, targetWord));
@@ -33,7 +35,7 @@ export default function WordLine(props: WordLineProps) {
       {Array.from(Array(5).keys()).map((idx) => (
         <CharacterBox
           key={`${rowIndex}_${idx}`}
-          char={word.charAt(idx) || "."}
+          char={word.charAt(idx) || "_"}
           feedback={feedback[idx] || Feedback.NONE}
         />
       ))}

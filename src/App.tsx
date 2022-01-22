@@ -26,7 +26,7 @@ export default function App() {
       <div className="py-5 text-center">
         <div>Programmiert von Johannes Charra</div>
         <div>
-          leicht inspiriert von{" "}
+          inspiriert von{" "}
           <a className="underline" href="https://www.powerlanguage.co.uk/wordle/" target="_blank">
             Wordle
           </a>

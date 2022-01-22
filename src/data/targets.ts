@@ -1254,7 +1254,6 @@ export const TARGETS = [
   "Zange",
   "Zebra",
   "Zeche",
-  "Zeige",
   "Zeile",
   "Zelle",
   "Zeter",

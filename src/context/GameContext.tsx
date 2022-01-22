@@ -1,6 +1,5 @@
 import * as React from "react";
 import { createContext, useCallback, useContext, useState } from "react";
-import { MAX_ATTEMPTS } from "../components/WordGrid";
 import confetti from "canvas-confetti";
 import { TARGETS } from "../data/targets";
 import { WORDS } from "../data/words";
@@ -30,6 +29,7 @@ function isAllowedChar(c: string) {
 }
 
 export const WORD_LENGTH = 5;
+export const MAX_ATTEMPTS = 6;
 
 function randomWord() {
   return TARGETS[Math.floor(Math.random() * TARGETS.length)].toUpperCase();
@@ -60,19 +60,19 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
 
         if (word === targetWord) {
           setSolved(true);
-        }
-
-        if (cursorRow === MAX_ATTEMPTS) {
-          setCaption("Leider nicht gelöst, der gesuchte Begriff war: " + targetWord.toUpperCase());
           return;
         }
 
-        return;
+        if (cursorRow >= MAX_ATTEMPTS - 1) {
+          setCaption("Leider nicht gelöst, der gesuchte Begriff war: " + targetWord.toUpperCase());
+          return;
+        }
       }
 
       if ((c === "Delete" || c === "Backspace") && word.length > 0) {
         const guessesUpdated = [...guesses];
         guessesUpdated[cursorRow] = word.slice(0, word.length - 1);
+        console.log("Update", guessesUpdated);
         setGuesses(guessesUpdated);
         setCaption("");
         return;
@@ -88,18 +88,22 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
         guessesUpdated[cursorRow] = word + c.toUpperCase();
         setGuesses(guessesUpdated);
       } else {
-        console.log("Current is", word, "longer than", 5);
+        setCaption("Drücke ENTER um das Wort zu prüfen!");
       }
     },
     [cursorRow, guesses, solved, targetWord]
   );
 
-  const newGame = useCallback((_wordLength: number, _attempts: number) => {
-    setGuesses([]);
-    setTargetWord(randomWord());
-    setCursorRow(0);
-    setSolved(false);
-  }, []);
+  const newGame = useCallback(
+    (_wordLength: number, _attempts: number) => {
+      setGuesses([]);
+      setTargetWord(randomWord());
+      setCursorRow(0);
+      setSolved(false);
+      setCaption("");
+    },
+    [setGuesses, setTargetWord, setCursorRow, setSolved, setCaption]
+  );
 
   React.useEffect(() => {
     if (solved) {
@@ -129,5 +133,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
 }
 
 export function useGameContext() {
-  return useContext(GameContext);
+  const ctx = useContext(GameContext);
+  //console.log("Ctx:", ctx);
+  return ctx;
 }

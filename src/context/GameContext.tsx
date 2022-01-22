@@ -69,17 +69,15 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
         }
       }
 
-      if ((c === "Delete" || c === "Backspace") && word.length > 0) {
+      if ((c === "Delete" || c === "Backspace" || c === "DEL") && word.length > 0) {
         const guessesUpdated = [...guesses];
         guessesUpdated[cursorRow] = word.slice(0, word.length - 1);
-        console.log("Update", guessesUpdated);
         setGuesses(guessesUpdated);
         setCaption("");
         return;
       }
 
       if (!isAllowedChar(c)) {
-        console.log("rejected", c);
         return;
       }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import Caption from "./components/Caption";
+import Keyboard from "./components/Keyboard";
 import NewGameButton from "./components/NewGameButton";
 import WordGrid from "./components/WordGrid";
 import { GameContextProvider } from "./context/GameContext";
@@ -11,19 +12,22 @@ export default function App() {
 
       <GameContextProvider>
         <div className="place-content-center w-full p-5">
-          <div className="w-1/2 place-content-center m-auto">
+          <div className="xs:w-3/4 md:w-1/2 place-content-center m-auto">
             <WordGrid />
           </div>
-          <div className="h-150 p-5 text-center">
+          <div className="h-150 pt-5 text-center">
             <Caption />
           </div>
-          <div className="py-5 text-center">
+          <div className="text-center">
+            <Keyboard />
+          </div>
+          <div className="pt-5 text-center">
             <NewGameButton />
           </div>
         </div>
       </GameContextProvider>
 
-      <div className="py-5 text-center">
+      <div className="py-5 text-center text-xs">
         <div>Programmiert von Johannes Charra</div>
         <div>
           inspiriert von{" "}

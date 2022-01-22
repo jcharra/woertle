@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGameContext } from "../context/GameContext";
 
 const keyRows = ["QWERTZUIOP".split(""), "ASDFGHJKL".split(""), ["Enter"].concat("YXCVBNM".split("")).concat(["DEL"])];
@@ -13,9 +13,11 @@ export default function Keyboard() {
   const { cursorRow, guesses, targetWord, processChar } = useGameContext();
   const [colorMap, setColorMap] = useState(new Map());
 
+  const completeGuesses = useMemo(() => guesses.slice(0, cursorRow - 1), [guesses, cursorRow]);
+
   useEffect(() => {
-    setColorMap(getColorMap(targetWord, guesses));
-  }, [cursorRow]);
+    setColorMap(getColorMap(targetWord, completeGuesses));
+  }, [targetWord, completeGuesses, cursorRow]);
 
   return (
     <>

@@ -27,13 +27,13 @@ export default function App() {
         <div>Programmiert von Johannes Charra</div>
         <div>
           inspiriert von{" "}
-          <a className="underline" href="https://www.powerlanguage.co.uk/wordle/" target="_blank">
+          <a className="underline" rel="noreferrer" href="https://www.powerlanguage.co.uk/wordle/" target="_blank">
             Wordle
           </a>
         </div>
         <div className="py-5">
           Quellcode auf{" "}
-          <a className="underline" href="https://github.com/jcharra/woertle" target="_blank">
+          <a className="underline" rel="noreferrer" href="https://github.com/jcharra/woertle" target="_blank">
             GitHub
           </a>
         </div>

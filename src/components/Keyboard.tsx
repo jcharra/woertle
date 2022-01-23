@@ -8,7 +8,7 @@ const keyRows = ["QWERTZUIOP".split(""), "ASDFGHJKL".split(""), ["DEL"].concat("
 
 function getColorMap(targetWord: string, guesses: string[]): Map<string, string> {
   const map = new Map<string, string>();
-  console.log(targetWord);
+
   for (const guess of guesses) {
     const fb = getFeedback(guess, targetWord);
 

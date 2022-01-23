@@ -1,3 +1,4 @@
+import { WORD_LENGTH } from "../context/GameContext";
 import { Feedback } from "./WordLine";
 
 function countChar(c: string, part: string): number {
@@ -40,3 +41,40 @@ export function getFeedback(guess: string, actual: string): Feedback[] {
   }
   return fb;
 }
+
+export function calculatePrecision(guesses: string[], targetWord: string): number {
+  const knownWrong: string[] = [];
+  const knownWrongAtPos = new Map<number, string[]>();
+  const knownCorrectAtPos = new Map<number, string>();
+  let idealCount = 0;
+
+  for (const guess of guesses) {
+    const fb = getFeedback(guess, targetWord);
+    for (let i = 0; i < WORD_LENGTH; i++) {
+      const char = guess[i];
+      if (fb[i] === Feedback.CORRECT) {
+        idealCount++;
+        continue;
+      }
+
+      if (fb[i] === Feedback.WRONG && knownWrong.indexOf(char) === -1) {
+        knownWrong.push(char);
+
+        if (!knownCorrectAtPos.get(i)) {
+          idealCount++;
+        }
+      }
+
+      if (fb[i] === Feedback.WRONG_POS && (knownWrongAtPos.get(i) || []).indexOf(char) === -1) {
+        const newknownWrongAtPos = (knownWrongAtPos.get(i) || []).concat([char]);
+        knownWrongAtPos.set(i, newknownWrongAtPos);
+        idealCount++;
+      }
+    }
+  }
+
+  const numberOfChars = guesses.length * WORD_LENGTH;
+  return numberOfChars ? idealCount / numberOfChars : PRECISION_UNKNOWN;
+}
+
+export const PRECISION_UNKNOWN = -1;

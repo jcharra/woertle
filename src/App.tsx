@@ -2,6 +2,7 @@ import React from "react";
 import Caption from "./components/Caption";
 import Keyboard from "./components/Keyboard";
 import NewGameButton from "./components/NewGameButton";
+import Precision from "./components/Precision";
 import WordGrid from "./components/WordGrid";
 import { GameContextProvider } from "./context/GameContext";
 
@@ -15,8 +16,11 @@ export default function App() {
           <div className="xs:w-3/4 md:w-1/2 place-content-center m-auto">
             <WordGrid />
           </div>
-          <div className="h-20 pt-5 text-center">
+          <div className="h-12 pt-3 text-center">
             <Caption />
+          </div>
+          <div className="h-12 text-center w-full sm:w-1/4 m-auto">
+            <Precision />
           </div>
           <div className="text-center">
             <Keyboard />
@@ -27,7 +31,7 @@ export default function App() {
         </div>
       </GameContextProvider>
 
-      <div className="py-5 text-center text-xs">
+      <div className="text-center text-xs">
         <div>Programmiert von Johannes Charra</div>
         <div>
           inspiriert von{" "}
@@ -35,7 +39,7 @@ export default function App() {
             Wordle
           </a>
         </div>
-        <div className="py-5">
+        <div className="pt-2">
           Quellcode auf{" "}
           <a className="underline" rel="noreferrer" href="https://github.com/jcharra/woertle" target="_blank">
             GitHub

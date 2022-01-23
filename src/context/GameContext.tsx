@@ -115,7 +115,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
       setSolved(false);
       setCaption("");
     },
-    [setGuesses, setTargetWord, setCursorRow, setSolved, setCaption]
+    [setGuesses, setTargetWord, setCursorRow, setSolved, setCaption, kidsMode]
   );
 
   const toggleKidsMode = useCallback(() => {

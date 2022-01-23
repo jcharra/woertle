@@ -27,7 +27,7 @@ export default function CharacterBox({
     } else {
       setBackground("bg-transparent");
     }
-  }, [feedback, currentGuess, cursorRow, active]);
+  }, [feedback, currentGuess, cursorRow, active, solved]);
 
   return (
     <div className={`border border-solid p-2 ${background}`}>

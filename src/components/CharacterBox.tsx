@@ -1,25 +1,36 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
+import { useGameContext } from "../context/GameContext";
+import { COLOR_CORRECT, COLOR_WRONG, COLOR_WRONG_POS } from "./Colors";
 import { Feedback } from "./WordLine";
 
-export default function CharacterBox({ char, feedback }: { char: string; feedback: Feedback }) {
-  const ref = useRef<HTMLDivElement>(null);
+export default function CharacterBox({
+  char,
+  feedback,
+  active,
+}: {
+  char: string;
+  feedback: Feedback;
+  active?: boolean;
+}) {
+  const [background, setBackground] = useState("transparent");
+  const { currentGuess, cursorRow } = useGameContext();
 
   useEffect(() => {
-    if (ref.current) {
-      if (feedback === Feedback.CORRECT) {
-        ref.current.style.background = "lightgreen";
-      } else if (feedback === Feedback.WRONG) {
-        ref.current.style.background = "lightgray";
-      } else if (feedback === Feedback.WRONG_POS) {
-        ref.current.style.background = "yellow";
-      } else {
-        ref.current.style.background = "transparent";
-      }
+    if (feedback === Feedback.CORRECT) {
+      setBackground(COLOR_CORRECT);
+    } else if (feedback === Feedback.WRONG) {
+      setBackground(COLOR_WRONG);
+    } else if (feedback === Feedback.WRONG_POS) {
+      setBackground(COLOR_WRONG_POS);
+    } else if (active) {
+      setBackground("bg-purple-200");
+    } else {
+      setBackground("bg-transparent");
     }
-  }, [feedback]);
+  }, [feedback, currentGuess, cursorRow, active]);
 
   return (
-    <div ref={ref} className="border border-solid p-2">
+    <div className={`border border-solid p-2 ${background}`}>
       <div className="h-5 text-center">{char}</div>
     </div>
   );

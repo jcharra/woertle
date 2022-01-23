@@ -49,7 +49,7 @@ export default function Keyboard() {
                     onClick={() => processChar(c)}
                     className={`${color} mr-1 sm:mx-1 ${
                       c === "I" ? "px-3" : "px-2"
-                    } py-2 sm:px-4 font-semibold text-sm text-white rounded-full shadow-md`}
+                    } py-2 sm:px-5 font-semibold text-sm text-white rounded-full shadow-md`}
                   >
                     {c}
                   </span>

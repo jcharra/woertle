@@ -29,12 +29,17 @@ export default function WordLine(props: WordLineProps) {
   }, [cursorRow, rowIndex, targetWord, word]);
 
   return (
-    <div className="grid grid-cols-5 place-content-center">
+    <div
+      className={`grid grid-cols-5 place-content-center ${
+        rowIndex === cursorRow && currentGuess.length === WORD_LENGTH ? "bg-purple-200" : ""
+      }`}
+    >
       {Array.from(Array(5).keys()).map((idx) => (
         <CharacterBox
           key={`${rowIndex}_${idx}`}
           char={word.charAt(idx) || "_"}
           feedback={feedback[idx] || Feedback.NONE}
+          active={rowIndex === cursorRow && idx === currentGuess.length}
         />
       ))}
     </div>

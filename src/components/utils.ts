@@ -60,7 +60,7 @@ export function calculatePrecision(guesses: string[], targetWord: string): numbe
       if (fb[i] === Feedback.WRONG && knownWrong.indexOf(char) === -1) {
         knownWrong.push(char);
 
-        if (!knownCorrectAtPos.get(i)) {
+        if (!knownCorrectAtPos.get(i) && (knownWrongAtPos.get(i) || []).indexOf(char) === -1) {
           idealCount++;
         }
       }

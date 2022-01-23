@@ -70,7 +70,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
           setSolved(true);
           setCaption(EVAL.get(cursorRow) || "Gut gemacht");
         } else if (cursorRow >= MAX_ATTEMPTS - 1) {
-          setCaption("Leider nicht gelöst, der gesuchte Begriff war: " + targetWord.toUpperCase());
+          setCaption("Leider nicht gelöst, gesucht war " + targetWord.toUpperCase());
         }
 
         const guessesUpdated = [...guesses];

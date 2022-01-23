@@ -8,6 +8,7 @@ export interface Game {
   cursorRow: number;
   targetWord: string;
   guesses: string[];
+  currentGuess: string;
   processChar: (c: string) => void;
   newGame: (wordlength: number, attemps: number) => void;
   solved: boolean;
@@ -18,6 +19,7 @@ export const GameContext = createContext<Game>({
   cursorRow: 0,
   targetWord: "",
   guesses: [],
+  currentGuess: "",
   processChar: (c: string) => {},
   newGame: (wordlength: number, attemps: number) => {},
   solved: false,
@@ -27,6 +29,15 @@ export const GameContext = createContext<Game>({
 function isAllowedChar(c: string) {
   return /^[a-zA-Z]$/.test(c);
 }
+
+const EVAL = new Map<number, string>([
+  [0, "Wahnsinn 😲"],
+  [1, "Unglaublich 🤩"],
+  [2, "Hervorragend 🥳"],
+  [3, "Klasse 👍🏻"],
+  [4, "Gut gemacht! 😊"],
+  [5, "Knappe Kiste 😅"],
+]);
 
 export const WORD_LENGTH = 5;
 export const MAX_ATTEMPTS = 6;
@@ -40,6 +51,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
   const [solved, setSolved] = useState(false);
   const [targetWord, setTargetWord] = useState(randomWord());
   const [guesses, setGuesses] = useState<string[]>([]);
+  const [currentGuess, setCurrentGuess] = useState("");
   const [caption, setCaption] = useState("");
 
   const processChar = useCallback(
@@ -48,31 +60,28 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
         return;
       }
 
-      const word = guesses[cursorRow] || "";
-
-      if (c === "Enter" && word.length === 5) {
-        if (WORDS.indexOf(word.toLowerCase()) === -1) {
+      if (c === "Enter" && currentGuess.length === 5) {
+        if (WORDS.indexOf(currentGuess.toLowerCase()) === -1) {
           setCaption("Das Wort gibt's leider nicht");
           return;
         }
 
-        setCursorRow((cr) => cr + 1);
-
-        if (word === targetWord) {
+        if (currentGuess === targetWord) {
           setSolved(true);
-          return;
+          setCaption(EVAL.get(cursorRow) || "Gut gemacht");
+        } else if (cursorRow >= MAX_ATTEMPTS - 1) {
+          setCaption("Leider nicht gelöst, der gesuchte Begriff war: " + targetWord.toUpperCase());
         }
 
-        if (cursorRow >= MAX_ATTEMPTS - 1) {
-          setCaption("Leider nicht gelöst, der gesuchte Begriff war: " + targetWord.toUpperCase());
-          return;
-        }
+        const guessesUpdated = [...guesses];
+        guessesUpdated.push(currentGuess);
+        setGuesses(guessesUpdated);
+        setCurrentGuess("");
+        setCursorRow((cr) => cr + 1);
       }
 
-      if ((c === "Delete" || c === "Backspace" || c === "DEL") && word.length > 0) {
-        const guessesUpdated = [...guesses];
-        guessesUpdated[cursorRow] = word.slice(0, word.length - 1);
-        setGuesses(guessesUpdated);
+      if ((c === "Delete" || c === "Backspace" || c === "DEL") && currentGuess.length > 0) {
+        setCurrentGuess(currentGuess.substring(0, currentGuess.length - 1));
         setCaption("");
         return;
       }
@@ -81,19 +90,18 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
         return;
       }
 
-      if (word.length < 5) {
-        const guessesUpdated = [...guesses];
-        guessesUpdated[cursorRow] = word + c.toUpperCase();
-        setGuesses(guessesUpdated);
+      if (currentGuess.length < 5) {
+        setCurrentGuess(currentGuess + c.toUpperCase());
       } else {
         setCaption("Drücke ENTER um das Wort zu prüfen!");
       }
     },
-    [cursorRow, guesses, solved, targetWord]
+    [cursorRow, currentGuess, solved, targetWord]
   );
 
   const newGame = useCallback(
     (_wordLength: number, _attempts: number) => {
+      setCurrentGuess("");
       setGuesses([]);
       setTargetWord(randomWord());
       setCursorRow(0);
@@ -118,6 +126,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
       value={{
         cursorRow,
         targetWord,
+        currentGuess,
         guesses,
         processChar,
         newGame,

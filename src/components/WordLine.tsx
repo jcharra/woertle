@@ -16,9 +16,9 @@ export enum Feedback {
 
 export default function WordLine(props: WordLineProps) {
   const { rowIndex } = props;
-  const { guesses, cursorRow, targetWord } = useGameContext();
+  const { currentGuess, guesses, cursorRow, targetWord } = useGameContext();
   const [feedback, setFeedback] = useState<Feedback[]>([]);
-  const word = guesses[rowIndex] || "";
+  const word = rowIndex === cursorRow ? currentGuess : guesses[rowIndex] || "";
 
   console.log("Guesses", guesses, "my word:", word, "at line", rowIndex);
 

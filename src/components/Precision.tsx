@@ -15,13 +15,17 @@ function getColor(precision: number) {
 }
 
 export default function Precision() {
-  const { guesses, targetWord } = useGameContext();
+  const { guesses, targetWord, kidsMode } = useGameContext();
   const [precision, setPrecision] = useState<number>(PRECISION_UNKNOWN);
 
   useEffect(() => {
     const prec = calculatePrecision(guesses, targetWord);
     setPrecision(prec);
   }, [guesses, targetWord]);
+
+  if (kidsMode) {
+    return null;
+  }
 
   return (
     <div className={`${getColor(precision)} rounded-full shadow-sm py-1`}>

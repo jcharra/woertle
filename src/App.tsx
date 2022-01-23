@@ -1,17 +1,21 @@
 import React from "react";
 import Caption from "./components/Caption";
 import Keyboard from "./components/Keyboard";
+import ModeSwitcher from "./components/ModeSwitcher";
 import NewGameButton from "./components/NewGameButton";
 import Precision from "./components/Precision";
+import Subheading from "./components/Subheading";
 import WordGrid from "./components/WordGrid";
 import { GameContextProvider } from "./context/GameContext";
 
 export default function App() {
   return (
     <div className="App">
-      <h1 className="text-center text-3xl pt-5 text-green-400 font-extrabold">~ Wörtle ~</h1>
-
       <GameContextProvider>
+        <h1 className="text-center text-3xl pt-5 text-green-400 font-extrabold">~ Wörtle ~</h1>
+        <Subheading />
+
+        <ModeSwitcher />
         <div className="place-content-center w-full p-5">
           <div className="xs:w-3/4 md:w-1/2 place-content-center m-auto">
             <WordGrid />

@@ -3,6 +3,7 @@ import { createContext, useCallback, useContext, useState } from "react";
 import confetti from "canvas-confetti";
 import { TARGETS } from "../data/targets";
 import { WORDS } from "../data/words";
+import { KIDS_WORDS } from "../data/kidsWords";
 
 export interface Game {
   cursorRow: number;
@@ -13,6 +14,8 @@ export interface Game {
   newGame: (wordlength: number, attemps: number) => void;
   solved: boolean;
   caption: string;
+  kidsMode: boolean;
+  toggleKidsMode: () => void;
 }
 
 export const GameContext = createContext<Game>({
@@ -24,6 +27,8 @@ export const GameContext = createContext<Game>({
   newGame: (wordlength: number, attemps: number) => {},
   solved: false,
   caption: "",
+  kidsMode: false,
+  toggleKidsMode: () => {},
 });
 
 function isAllowedChar(c: string) {
@@ -42,17 +47,19 @@ const EVAL = new Map<number, string>([
 export const WORD_LENGTH = 5;
 export const MAX_ATTEMPTS = 6;
 
-function randomWord() {
-  return TARGETS[Math.floor(Math.random() * TARGETS.length)].toUpperCase();
+function randomWord(isKidsMode: boolean) {
+  const wordSet = isKidsMode ? KIDS_WORDS : TARGETS;
+  return wordSet[Math.floor(Math.random() * wordSet.length)].toUpperCase();
 }
 
 export function GameContextProvider({ children }: { children: React.ReactNode }) {
   const [cursorRow, setCursorRow] = useState(0);
   const [solved, setSolved] = useState(false);
-  const [targetWord, setTargetWord] = useState(randomWord());
+  const [targetWord, setTargetWord] = useState(randomWord(false));
   const [guesses, setGuesses] = useState<string[]>([]);
   const [currentGuess, setCurrentGuess] = useState("");
   const [caption, setCaption] = useState("");
+  const [kidsMode, setKidsMode] = useState(false);
 
   const processChar = useCallback(
     (c: string) => {
@@ -103,13 +110,17 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
     (_wordLength: number, _attempts: number) => {
       setCurrentGuess("");
       setGuesses([]);
-      setTargetWord(randomWord());
+      setTargetWord(randomWord(kidsMode));
       setCursorRow(0);
       setSolved(false);
       setCaption("");
     },
     [setGuesses, setTargetWord, setCursorRow, setSolved, setCaption]
   );
+
+  const toggleKidsMode = useCallback(() => {
+    setKidsMode(!kidsMode);
+  }, [kidsMode, setKidsMode]);
 
   React.useEffect(() => {
     if (solved) {
@@ -132,6 +143,8 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
         newGame,
         solved,
         caption,
+        kidsMode,
+        toggleKidsMode,
       }}
     >
       {children}

@@ -20,8 +20,6 @@ export default function WordLine(props: WordLineProps) {
   const [feedback, setFeedback] = useState<Feedback[]>([]);
   const word = rowIndex === cursorRow ? currentGuess : guesses[rowIndex] || "";
 
-  console.log("Guesses", guesses, "my word:", word, "at line", rowIndex);
-
   useEffect(() => {
     if (cursorRow > rowIndex) {
       setFeedback(getFeedback(word, targetWord));

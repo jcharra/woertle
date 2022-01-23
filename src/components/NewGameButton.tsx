@@ -1,9 +1,17 @@
+import { useEffect, useState } from "react";
 import { MAX_ATTEMPTS, useGameContext } from "../context/GameContext";
 
 export default function NewGameButton() {
-  const { newGame, solved, cursorRow } = useGameContext();
+  const { newGame, solved, guesses } = useGameContext();
+  const [disabled, setDisabled] = useState(true);
 
-  const disabled = !solved || cursorRow < MAX_ATTEMPTS;
+  useEffect(() => {
+    if (solved || guesses.length === MAX_ATTEMPTS) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [solved, guesses]);
 
   return (
     <div>

@@ -13,7 +13,7 @@ export default function CharacterBox({
   active?: boolean;
 }) {
   const [background, setBackground] = useState("transparent");
-  const { currentGuess, cursorRow } = useGameContext();
+  const { currentGuess, cursorRow, solved } = useGameContext();
 
   useEffect(() => {
     if (feedback === Feedback.CORRECT) {
@@ -22,7 +22,7 @@ export default function CharacterBox({
       setBackground(COLOR_WRONG);
     } else if (feedback === Feedback.WRONG_POS) {
       setBackground(COLOR_WRONG_POS);
-    } else if (active) {
+    } else if (active && !solved) {
       setBackground("bg-purple-200");
     } else {
       setBackground("bg-transparent");

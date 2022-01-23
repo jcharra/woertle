@@ -61,7 +61,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
       }
 
       if (c === "Enter" && currentGuess.length === 5) {
-        if (WORDS.indexOf(currentGuess.toLowerCase()) === -1) {
+        if (TARGETS.indexOf(currentGuess.toLowerCase()) === -1 && WORDS.indexOf(currentGuess.toLowerCase()) === -1) {
           setCaption("Das Wort gibt's leider nicht");
           return;
         }

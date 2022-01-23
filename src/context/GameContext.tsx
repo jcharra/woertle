@@ -96,7 +96,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
         setCaption("Drücke ENTER um das Wort zu prüfen!");
       }
     },
-    [cursorRow, currentGuess, solved, targetWord]
+    [cursorRow, guesses, currentGuess, solved, targetWord]
   );
 
   const newGame = useCallback(

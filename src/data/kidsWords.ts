@@ -378,7 +378,6 @@ export const KIDS_WORDS = [
   "osten",
   "otter",
   "ozean",
-  "pacht",
   "paket",
   "palme",
   "panik",

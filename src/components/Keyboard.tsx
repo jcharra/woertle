@@ -8,7 +8,7 @@ const keyRows = ["QWERTZUIOP".split(""), "ASDFGHJKL".split(""), ["DEL"].concat("
 
 function getColorMap(targetWord: string, guesses: string[]): Map<string, string> {
   const map = new Map<string, string>();
-
+  console.log(targetWord);
   for (const guess of guesses) {
     const fb = getFeedback(guess, targetWord);
 
@@ -18,7 +18,7 @@ function getColorMap(targetWord: string, guesses: string[]): Map<string, string>
         map.set(charAtPos, COLOR_CORRECT);
       } else if (fb[i] === Feedback.WRONG_POS && map.get(charAtPos) !== COLOR_CORRECT) {
         map.set(charAtPos, COLOR_WRONG_POS);
-      } else {
+      } else if (fb[i] === Feedback.WRONG && !map.get(charAtPos)) {
         map.set(charAtPos, COLOR_WRONG);
       }
     }
@@ -37,14 +37,15 @@ export default function Keyboard() {
 
   return (
     <>
-      {keyRows.map((row) => {
+      {keyRows.map((row, index) => {
         return (
-          <div className="py-2 place-content-center m-auto">
+          <div className="py-2 place-content-center m-auto" key={"row_" + index}>
             <div>
               {row.map((c) => {
                 const color = colorMap.get(c) || "bg-cyan-400";
                 return (
                   <span
+                    key={"key_" + c}
                     onClick={() => processChar(c)}
                     className={`${color} mr-1 sm:mx-1 ${
                       c === "I" ? "px-3" : "px-2"

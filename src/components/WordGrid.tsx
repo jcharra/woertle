@@ -6,12 +6,10 @@ export default function WordGrid() {
   const { processChar } = useGameContext();
 
   React.useEffect(() => {
-    console.log("Add listener");
     const listener = (e: KeyboardEvent) => processChar(e.key);
     window.addEventListener("keyup", listener);
 
     return () => {
-      console.log("Remove listener");
       window.removeEventListener("keyup", listener);
     };
   }, [processChar]);

@@ -8,14 +8,14 @@ import { GameContextProvider } from "./context/GameContext";
 export default function App() {
   return (
     <div className="App">
-      <h1 className="text-center text-xl pt-5">Wörtle</h1>
+      <h1 className="text-center text-3xl pt-5 text-green-400 font-extrabold">~ Wörtle ~</h1>
 
       <GameContextProvider>
         <div className="place-content-center w-full p-5">
           <div className="xs:w-3/4 md:w-1/2 place-content-center m-auto">
             <WordGrid />
           </div>
-          <div className="h-150 pt-5 text-center">
+          <div className="h-20 pt-5 text-center">
             <Caption />
           </div>
           <div className="text-center">

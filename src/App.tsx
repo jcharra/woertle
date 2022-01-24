@@ -16,14 +16,14 @@ export default function App() {
         <Subheading />
 
         <ModeSwitcher />
-        <div className="place-content-center w-full p-5">
+        <div className="place-content-center w-full p-2 sm:p-5">
           <div className="xs:w-3/4 md:w-1/2 place-content-center m-auto">
             <WordGrid />
           </div>
           <div className="h-12 pt-3 text-center">
             <Caption />
           </div>
-          <div className="h-12 text-center w-full sm:w-1/4 m-auto">
+          <div className="h-12 text-center w-full sm:w-1/4 px-4 sm:px-0 m-auto">
             <Precision />
           </div>
           <div className="text-center">

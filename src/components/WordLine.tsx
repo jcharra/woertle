@@ -37,7 +37,7 @@ export default function WordLine(props: WordLineProps) {
       {Array.from(Array(5).keys()).map((idx) => (
         <CharacterBox
           key={`${rowIndex}_${idx}`}
-          char={word.charAt(idx) || "_"}
+          char={word.charAt(idx)}
           feedback={feedback[idx] || Feedback.NONE}
           active={rowIndex === cursorRow && idx === currentGuess.length}
         />

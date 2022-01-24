@@ -31,7 +31,7 @@ export default function CharacterBox({
 
   return (
     <div className={`border border-solid p-2 ${background}`}>
-      <div className="h-5 text-center">{char}</div>
+      <div className="h-5 text-center font-bold">{char}</div>
     </div>
   );
 }

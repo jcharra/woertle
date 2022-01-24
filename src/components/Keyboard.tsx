@@ -27,6 +27,11 @@ function getColorMap(targetWord: string, guesses: string[]): Map<string, string>
   return map;
 }
 
+const SYMBOLS = new Map<string, string>([
+  ["Enter", "⏎"],
+  ["DEL", "⌫"],
+]);
+
 export default function Keyboard() {
   const { guesses, targetWord, processChar } = useGameContext();
   const [colorMap, setColorMap] = useState(new Map());
@@ -40,7 +45,27 @@ export default function Keyboard() {
       {keyRows.map((row, index) => {
         return (
           <div className="py-2 place-content-center m-auto" key={"row_" + index}>
-            <div>
+            {
+              // Keyboard for SM and larger
+            }
+            <div className="hidden sm:block">
+              {row.map((c) => {
+                const color = colorMap.get(c) || "bg-cyan-400";
+                return (
+                  <span
+                    key={"key_" + c}
+                    onClick={() => processChar(c)}
+                    className={`${color} mr-1 mx-1 py-2 px-6 font-semibold text-sm text-white rounded-full shadow-md`}
+                  >
+                    {c}
+                  </span>
+                );
+              })}
+            </div>
+            {
+              // XS keyboard
+            }
+            <div className="sm:hidden">
               {row.map((c) => {
                 const color = colorMap.get(c) || "bg-cyan-400";
                 return (
@@ -48,10 +73,10 @@ export default function Keyboard() {
                     key={"key_" + c}
                     onClick={() => processChar(c)}
                     className={`${color} mr-1 sm:mx-1 ${
-                      c === "I" ? "px-3" : "px-2"
-                    } py-2 sm:px-5 font-semibold text-sm text-white rounded-full shadow-md`}
+                      c === "I" ? "px-4" : "px-3"
+                    } py-2 sm:px-5 font-semibold text-sm text-white`}
                   >
-                    {c}
+                    {SYMBOLS.get(c) || c}
                   </span>
                 );
               })}

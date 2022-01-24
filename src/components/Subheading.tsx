@@ -8,13 +8,13 @@ export default function Subheading() {
   }
 
   return (
-    <div className="w-full text-center">
-      <span className="text-red-600">J</span>
-      <span className="text-yellow-300">U</span>
-      <span className="text-blue-600">N</span>
-      <span className="text-green-600">I</span>
-      <span className="text-purple-600">O</span>
-      <span className="text-yellow-600">R</span>
+    <div className="w-full text-center font-bold">
+      <span className="text-red-600 mr-1">J</span>
+      <span className="text-yellow-300 mr-1">U</span>
+      <span className="text-blue-600 mr-1">N</span>
+      <span className="text-green-600 mr-1">I</span>
+      <span className="text-purple-600 mr-1">O</span>
+      <span className="text-yellow-600 mr-1">R</span>
     </div>
   );
 }

@@ -72,7 +72,7 @@ export default function Keyboard() {
                   <span
                     key={"key_" + c}
                     onClick={() => processChar(c)}
-                    className={`${color} mr-1 sm:mx-1 ${
+                    className={`${color} mr-px sm:mx-1 ${
                       c === "I" ? "px-4" : "px-3"
                     } py-2 sm:px-5 font-semibold text-sm text-white`}
                   >

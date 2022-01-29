@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGameContext } from "../context/GameContext";
-import { COLOR_CORRECT, COLOR_WRONG, COLOR_WRONG_POS } from "./Colors";
+import { COLOR_CORRECT, COLOR_KEYBOARD_DEFAULT, COLOR_WRONG, COLOR_WRONG_POS } from "./Colors";
 import { getFeedback } from "./utils";
 import { Feedback } from "./WordLine";
 
@@ -50,7 +50,7 @@ export default function Keyboard() {
             }
             <div className="hidden sm:block">
               {row.map((c) => {
-                const color = colorMap.get(c) || "bg-cyan-400";
+                const color = colorMap.get(c) || COLOR_KEYBOARD_DEFAULT;
                 return (
                   <span
                     key={"key_" + c}

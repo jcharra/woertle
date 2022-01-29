@@ -23,9 +23,7 @@ export default function App() {
           <div className="h-12 pt-3 text-center">
             <Caption />
           </div>
-          <div className="h-12 text-center w-full sm:w-1/4 px-4 sm:px-0 m-auto">
-            <Precision />
-          </div>
+          <Precision />
           <div className="text-center">
             <Keyboard />
           </div>

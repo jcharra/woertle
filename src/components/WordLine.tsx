@@ -38,8 +38,9 @@ export default function WordLine(props: WordLineProps) {
         <CharacterBox
           key={`${rowIndex}_${idx}`}
           char={word.charAt(idx)}
-          feedback={feedback[idx] || Feedback.NONE}
+          feedback={feedback}
           active={rowIndex === cursorRow && idx === currentGuess.length}
+          index={idx}
         />
       ))}
     </div>

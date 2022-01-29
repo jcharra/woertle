@@ -16,6 +16,8 @@ export interface Game {
   caption: string;
   kidsMode: boolean;
   toggleKidsMode: () => void;
+  arrowsEnabled: boolean;
+  toggleArrows: () => void;
 }
 
 export const GameContext = createContext<Game>({
@@ -29,6 +31,8 @@ export const GameContext = createContext<Game>({
   caption: "",
   kidsMode: false,
   toggleKidsMode: () => {},
+  arrowsEnabled: false,
+  toggleArrows: () => {},
 });
 
 function isAllowedChar(c: string) {
@@ -36,8 +40,8 @@ function isAllowedChar(c: string) {
 }
 
 const EVAL = new Map<number, string>([
-  [0, "Wahnsinn 😲"],
-  [1, "Unglaublich 🤩"],
+  [0, "Wahnsinn 😲 Kannst Du hellsehen? 👁️"],
+  [1, "Unglaublich gut 🤩"],
   [2, "Hervorragend 🥳"],
   [3, "Klasse 👍🏻"],
   [4, "Gut gemacht! 😊"],
@@ -60,6 +64,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
   const [currentGuess, setCurrentGuess] = useState("");
   const [caption, setCaption] = useState("");
   const [kidsMode, setKidsMode] = useState(false);
+  const [arrowsEnabled, setArrowsEnabled] = useState(false);
 
   const processChar = useCallback(
     (c: string) => {
@@ -78,6 +83,8 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
           setCaption(EVAL.get(cursorRow) || "Gut gemacht");
         } else if (cursorRow >= MAX_ATTEMPTS - 1) {
           setCaption("Leider nicht gelöst, gesucht war " + targetWord.toUpperCase());
+        } else if (currentGuess.toLowerCase() === "penis") {
+          setCaption(kidsMode ? "Und das im Kindermodus ... 🙄" : "Leider falsch 🍆");
         }
 
         const guessesUpdated = [...guesses];
@@ -119,8 +126,13 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
   );
 
   const toggleKidsMode = useCallback(() => {
+    setArrowsEnabled(!kidsMode); // current value, thus negated!
     setKidsMode(!kidsMode);
-  }, [kidsMode, setKidsMode]);
+  }, [kidsMode, setKidsMode, setArrowsEnabled]);
+
+  const toggleArrows = useCallback(() => {
+    setArrowsEnabled(!arrowsEnabled);
+  }, [arrowsEnabled, setArrowsEnabled]);
 
   React.useEffect(() => {
     if (solved) {
@@ -145,6 +157,8 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
         caption,
         kidsMode,
         toggleKidsMode,
+        arrowsEnabled,
+        toggleArrows,
       }}
     >
       {children}

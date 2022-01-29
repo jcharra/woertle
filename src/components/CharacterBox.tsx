@@ -76,9 +76,9 @@ export default function CharacterBox({
 function CharWithArrows({ char, left, right }: { char: string; left: boolean; right: boolean }) {
   return (
     <>
-      <span className={`mr-1 inline-block ${left ? TEXT_WRONG_POS_VISIBLE : TEXT_WRONG_POS_INVISIBLE}`}>&#8592;</span>
+      <span className={`mr-px inline-block ${left ? TEXT_WRONG_POS_VISIBLE : TEXT_WRONG_POS_INVISIBLE}`}>&#8592;</span>
       {char}
-      <span className={`ml-1 inline-block ${right ? TEXT_WRONG_POS_VISIBLE : TEXT_WRONG_POS_INVISIBLE}`}>&#8594;</span>
+      <span className={`ml-px inline-block ${right ? TEXT_WRONG_POS_VISIBLE : TEXT_WRONG_POS_INVISIBLE}`}>&#8594;</span>
     </>
   );
 }

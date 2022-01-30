@@ -84,7 +84,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
         } else if (cursorRow >= MAX_ATTEMPTS - 1) {
           setCaption("Leider nicht gelöst, gesucht war " + targetWord.toUpperCase());
         } else if (currentGuess.toLowerCase() === "penis") {
-          setCaption(kidsMode ? "Und das im Kindermodus ... 🙄" : "Leider falsch 🍆");
+          setCaption(kidsMode ? "Und das im Kindermodus ... 🙄" : "Nein, ich glaube nicht.");
         }
 
         const guessesUpdated = [...guesses];

@@ -16,10 +16,7 @@ const keyRowsXs = [
   ["DEL"].concat("VWXYZ".split("")).concat(["Enter"]),
 ];
 
-const SYMBOLS = new Map<string, string>([
-  ["Enter", "⏎"],
-  ["DEL", "⌫"],
-]);
+const SYMBOLS = new Map<string, string>([["Enter", "⏎"]]);
 
 export default function Keyboard() {
   const { guesses, targetWord, processChar } = useGameContext();
@@ -72,10 +69,7 @@ function KeyboardSmallUp(props: KeyboardProps) {
   );
 }
 
-const CUSTOM_PADDING = new Map<string, number>([
-  ["I", 5],
-  ["DEL", 3],
-]);
+const CUSTOM_PADDING = new Map<string, number>([["I", 5]]);
 function KeyboardXs(props: KeyboardProps) {
   const { processChar, colorMap } = props;
   return (

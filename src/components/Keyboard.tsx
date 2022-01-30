@@ -4,7 +4,105 @@ import { COLOR_CORRECT, COLOR_KEYBOARD_DEFAULT, COLOR_WRONG, COLOR_WRONG_POS } f
 import { getFeedback } from "./utils";
 import { Feedback } from "./WordLine";
 
-const keyRows = ["QWERTZUIOP".split(""), "ASDFGHJKL".split(""), ["DEL"].concat("YXCVBNM".split("")).concat(["Enter"])];
+const keyRows = [
+  "QWERTZUIOPÜ".split(""),
+  "ASDFGHJKLÖÄ".split(""),
+  ["DEL"].concat("YXCVBNMß".split("")).concat(["Enter"]),
+];
+const keyRowsXs = [
+  "ABCDEFG".split(""),
+  "HIJKLMN".split(""),
+  "OPQRSTU".split(""),
+  ["DEL"].concat("VWXYZ".split("")).concat(["Enter"]),
+];
+
+const SYMBOLS = new Map<string, string>([
+  ["Enter", "⏎"],
+  ["DEL", "⌫"],
+]);
+
+export default function Keyboard() {
+  const { guesses, targetWord, processChar } = useGameContext();
+  const [colorMap, setColorMap] = useState(new Map());
+
+  useEffect(() => {
+    setColorMap(getColorMap(targetWord, guesses));
+  }, [targetWord, guesses]);
+
+  return (
+    <>
+      <div className="hidden sm:block">
+        <KeyboardSmallUp processChar={processChar} colorMap={colorMap} />
+      </div>
+      <div className="sm:hidden">
+        <KeyboardXs processChar={processChar} colorMap={colorMap} />
+      </div>
+    </>
+  );
+}
+
+interface KeyboardProps {
+  processChar: (c: string) => void;
+  colorMap: Map<string, string>;
+}
+
+function KeyboardSmallUp(props: KeyboardProps) {
+  const { processChar, colorMap } = props;
+  return (
+    <>
+      {keyRows.map((row, index) => {
+        return (
+          <div className="py-2 place-content-center m-auto" key={"row_" + index}>
+            {row.map((c) => {
+              const color = colorMap.get(c) || COLOR_KEYBOARD_DEFAULT;
+              return (
+                <span
+                  key={"key_" + c}
+                  onClick={() => processChar(c)}
+                  className={`${color} mr-1 mx-1 py-2 px-5 md:px-6 font-semibold text-sm text-white rounded-full shadow-md`}
+                >
+                  {c}
+                </span>
+              );
+            })}
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+const CUSTOM_PADDING = new Map<string, number>([
+  ["I", 5],
+  ["DEL", 3],
+]);
+function KeyboardXs(props: KeyboardProps) {
+  const { processChar, colorMap } = props;
+  return (
+    <>
+      {keyRowsXs.map((row, index) => {
+        return (
+          <div className="py-2 place-content-center m-auto" key={"row_" + index}>
+            {row.map((c: string) => {
+              const color = colorMap.get(c) || "bg-cyan-400";
+              return (
+                <span
+                  key={"key_" + c}
+                  onClick={() => processChar(c)}
+                  className={`${color} mr-px py-2 px-${
+                    CUSTOM_PADDING.get(c) || 4
+                  } font-semibold text-sm text-white rounded-full shadow-md`}
+                >
+                  {SYMBOLS.get(c) || c}
+                </span>
+              );
+            })}
+          </div>
+        );
+      })}
+    </>
+  );
+}
 
 function getColorMap(targetWord: string, guesses: string[]): Map<string, string> {
   const map = new Map<string, string>();
@@ -25,65 +123,4 @@ function getColorMap(targetWord: string, guesses: string[]): Map<string, string>
   }
 
   return map;
-}
-
-const SYMBOLS = new Map<string, string>([
-  ["Enter", "⏎"],
-  ["DEL", "⌫"],
-]);
-
-export default function Keyboard() {
-  const { guesses, targetWord, processChar } = useGameContext();
-  const [colorMap, setColorMap] = useState(new Map());
-
-  useEffect(() => {
-    setColorMap(getColorMap(targetWord, guesses));
-  }, [targetWord, guesses]);
-
-  return (
-    <>
-      {keyRows.map((row, index) => {
-        return (
-          <div className="py-2 place-content-center m-auto" key={"row_" + index}>
-            {
-              // Keyboard for SM and larger
-            }
-            <div className="hidden sm:block">
-              {row.map((c) => {
-                const color = colorMap.get(c) || COLOR_KEYBOARD_DEFAULT;
-                return (
-                  <span
-                    key={"key_" + c}
-                    onClick={() => processChar(c)}
-                    className={`${color} mr-1 mx-1 py-2 px-6 font-semibold text-sm text-white rounded-full shadow-md`}
-                  >
-                    {c}
-                  </span>
-                );
-              })}
-            </div>
-            {
-              // XS keyboard
-            }
-            <div className="sm:hidden">
-              {row.map((c) => {
-                const color = colorMap.get(c) || "bg-cyan-400";
-                return (
-                  <span
-                    key={"key_" + c}
-                    onClick={() => processChar(c)}
-                    className={`${color} mr-px sm:mx-1 ${
-                      c === "I" ? "px-4" : "px-3"
-                    } py-2 sm:px-5 font-semibold text-sm text-white`}
-                  >
-                    {SYMBOLS.get(c) || c}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-    </>
-  );
 }

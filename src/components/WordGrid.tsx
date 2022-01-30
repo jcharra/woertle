@@ -16,7 +16,7 @@ export default function WordGrid() {
 
   return (
     <>
-      <div id="grid" tabIndex={0} className="focus:outline-0">
+      <div id="grid" tabIndex={0} className="focus:outline-0 max-w-md m-auto">
         {Array.from(Array(MAX_ATTEMPTS).keys()).map((idx) => (
           <WordLine rowIndex={idx} key={"line" + idx}></WordLine>
         ))}

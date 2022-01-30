@@ -28,7 +28,7 @@ export default function Precision() {
   }
 
   return (
-    <div className="h-12 text-center w-full sm:w-1/4 px-4 sm:px-0 m-auto">
+    <div className="h-12 text-center w-2/3 sm:w-1/4 px-4 sm:px-0 m-auto">
       <div className={`${getColor(precision)} rounded-full shadow-sm py-1`}>
         Präzision: {precision === PRECISION_UNKNOWN ? "-" : (precision * 100).toFixed(1) + "%"}
       </div>

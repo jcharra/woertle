@@ -10,7 +10,7 @@ import { GameContextProvider } from "./context/GameContext";
 
 export default function App() {
   return (
-    <div className="App">
+    <div className="App max-w-6xl m-auto">
       <GameContextProvider>
         <h1 className="text-center text-3xl pt-5 text-green-400 font-extrabold">~ Wörtle ~</h1>
         <Subheading />
@@ -27,7 +27,7 @@ export default function App() {
           <div className="text-center">
             <Keyboard />
           </div>
-          <div className="pt-5 text-center">
+          <div className="pb-2 pt-3 text-center">
             <NewGameButton />
           </div>
         </div>

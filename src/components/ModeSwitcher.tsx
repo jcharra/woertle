@@ -10,10 +10,10 @@ export default function ModeSwitcher() {
 
   return (
     <>
-      <div className="text-3xl fixed top-5 left-5" onClick={() => toggleKidsMode()}>
+      <div className="text-3xl fixed top-5 left-5 md:left-48 lg:left-96" onClick={() => toggleKidsMode()}>
         {kidsMode ? "🧒🏼" : "🧑🏼"}
       </div>
-      <div className="text-4xl fixed top-5 right-5" onClick={() => toggleArrows()}>
+      <div className="text-4xl fixed top-5 right-5 md:right-48 lg:right-96" onClick={() => toggleArrows()}>
         {kidsMode ? <span className={`${arrowsEnabled ? "text-green-700" : "text-gray-200"}`}>&#8646;</span> : ""}
       </div>
     </>

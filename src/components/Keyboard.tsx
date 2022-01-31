@@ -4,11 +4,7 @@ import { COLOR_CORRECT, COLOR_KEYBOARD_DEFAULT, COLOR_WRONG, COLOR_WRONG_POS } f
 import { getFeedback } from "./utils";
 import { Feedback } from "./WordLine";
 
-const keyRows = [
-  "QWERTZUIOPÜ".split(""),
-  "ASDFGHJKLÖÄ".split(""),
-  ["DEL"].concat("YXCVBNMß".split("")).concat(["Enter"]),
-];
+const keyRows = ["QWERTZUIOP".split(""), "ASDFGHJKL".split(""), ["DEL"].concat("YXCVBNM".split("")).concat(["Enter"])];
 const keyRowsXs = [
   "ABCDEFG".split(""),
   "HIJKLMN".split(""),

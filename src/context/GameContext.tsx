@@ -83,7 +83,7 @@ export function GameContextProvider({ children }: { children: React.ReactNode })
           setCaption(EVAL.get(cursorRow) || "Gut gemacht");
         } else if (cursorRow >= MAX_ATTEMPTS - 1) {
           setCaption("Leider nicht gelöst, gesucht war " + targetWord.toUpperCase());
-        } else if (currentGuess.toLowerCase() === "penis") {
+        } else if (currentGuess.toLowerCase().split("").reverse().join("") === "sinep") {
           setCaption(kidsMode ? "Und das im Kindermodus ... 🙄" : "Nein, ich glaube nicht.");
         }
 

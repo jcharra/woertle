@@ -30,6 +30,7 @@ export default function WordLine(props: WordLineProps) {
 
   return (
     <div
+      data-testid={`wordline-${rowIndex}`}
       className={`grid grid-cols-5 place-content-center ${
         rowIndex === cursorRow && currentGuess.length === WORD_LENGTH ? "bg-purple-200" : ""
       }`}

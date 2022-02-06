@@ -6,7 +6,7 @@ import WordGrid from "./WordGrid";
 
 export default function GameArea() {
   return (
-    <div className="place-content-center w-full p-2 sm:p-5">
+    <div className="place-content-center w-full p-2 sm:p-5" data-testid="game-area">
       <div className="xs:w-3/4 md:w-1/2 place-content-center m-auto">
         <WordGrid />
       </div>

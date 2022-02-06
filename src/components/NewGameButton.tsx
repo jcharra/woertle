@@ -16,6 +16,7 @@ export default function NewGameButton() {
   return (
     <div>
       <button
+        data-testid="newgame-button"
         disabled={disabled}
         className={`${
           disabled ? "bg-gray-200" : "bg-cyan-500"

@@ -50,6 +50,7 @@ function KeyboardSmallUp(props: KeyboardProps) {
               const color = colorMap.get(c) || COLOR_KEYBOARD_DEFAULT;
               return (
                 <span
+                  data-testid={`keyboard-key-${c.toLowerCase()}`}
                   key={"key_" + c}
                   onClick={() => processChar(c)}
                   className={`${color} mr-1 mx-1 py-2 px-5 md:px-6 font-semibold text-sm text-white rounded-full shadow-md`}
@@ -77,6 +78,7 @@ function KeyboardXs(props: KeyboardProps) {
               const color = colorMap.get(c) || "bg-cyan-400";
               return (
                 <span
+                  data-testid={`keyboard-key-${c}`}
                   key={"key_" + c}
                   onClick={() => processChar(c)}
                   className={`${color} mr-px py-2 px-${

@@ -20,7 +20,7 @@ export interface Game {
   toggleArrows: () => void;
 }
 
-export const GameContext = createContext<Game>({
+export const DEFAULT_CONTEXT = {
   cursorRow: 0,
   targetWord: "",
   guesses: [],
@@ -33,14 +33,16 @@ export const GameContext = createContext<Game>({
   toggleKidsMode: () => {},
   arrowsEnabled: false,
   toggleArrows: () => {},
-});
+};
+
+export const GameContext = createContext<Game>(DEFAULT_CONTEXT);
 
 function isAllowedChar(c: string) {
   return /^[a-zA-Z]$/.test(c);
 }
 
 const EVAL = new Map<number, string>([
-  [0, "Wahnsinn 😲 Kannst Du hellsehen? 👁️"],
+  [0, "Wahnsinn 😲 Kannst Du hellsehen?"],
   [1, "Unglaublich gut 🤩"],
   [2, "Hervorragend 🥳"],
   [3, "Klasse 👍🏻"],

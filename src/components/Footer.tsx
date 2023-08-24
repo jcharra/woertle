@@ -4,7 +4,12 @@ export default function Footer() {
       <div>Programmiert von Johannes Charra</div>
       <div>
         inspiriert von{" "}
-        <a className="underline" rel="noreferrer" href="https://www.powerlanguage.co.uk/wordle/" target="_blank">
+        <a
+          className="underline"
+          rel="noreferrer"
+          href="https://www.nytimes.com/games/wordle/index.html"
+          target="_blank"
+        >
           Wordle
         </a>
       </div>

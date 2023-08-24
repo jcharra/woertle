@@ -11,7 +11,7 @@ export default function ModeSwitcher() {
   return (
     <>
       <div className="text-3xl" onClick={() => toggleKidsMode()}>
-        {kidsMode ? "🧒🏼" : "🧑🏼"}
+        <span className="cursor-pointer">{kidsMode ? "🧒🏼" : "🧑🏼"}</span>
       </div>
     </>
   );

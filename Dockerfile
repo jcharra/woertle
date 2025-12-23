@@ -9,6 +9,6 @@ RUN npm run build
 # ---- runtime ----
 FROM caddy:alpine
 
-COPY --from=build /app/dist /srv
+COPY --from=build /app/build /srv
 
 EXPOSE 80
